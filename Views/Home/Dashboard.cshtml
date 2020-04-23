@@ -1,0 +1,58 @@
+@model UserWedWrapper
+<div class="row">
+    <div class="col-10 py-3">
+        <h2>Welcome to Wedding Planner</h2>
+    </div>
+</div>
+<div class="row-col">
+    <table class="table table-striped border overflow-auto">
+        <thead>
+            <tr>
+                <th>Wedding</th>
+                <th>Date</th>
+                <th>Guests</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var wed in @Model.EveryWedding)
+            {
+            <tr>
+                <td>
+                    <a href="wedding/@wed.WeddingId">@wed.WeddingName</a>
+                </td>
+                <td>@wed.Date.ToString("MMMM dd, yyyy")</td>
+                <td>@wed.AllUsers.Count</td>
+                <td>
+                    @if(@Model.ThisUser.UserId == @wed.UserId)
+                    {
+                        <a href="/delete/@wed.WeddingId">Delete</a>
+                    }
+                    else
+                    {
+                        bool AlreadyRSVP = false;
+                        @foreach(var assoc in @Model.ThisUser.AllWeddings)
+                        {
+                            @if(@wed.AllUsers.Contains(assoc))
+                            {
+                                AlreadyRSVP = true;
+                                <a href="/unrsvp/@wed.WeddingId">Un-RSVP</a>
+                                continue;
+                            }
+                        }
+                        @if(!AlreadyRSVP)
+                        {
+                            <a href="/rsvp/@wed.WeddingId">RSVP</a>
+                        }
+                    }
+                </td>
+        
+            </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+<div class="row-col text-right">
+    <a href="/planWedding"class="btn btn-outline-info">New Wedding</a>
+</div>

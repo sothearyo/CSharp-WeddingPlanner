@@ -1,0 +1,28 @@
+@model Wedding
+@* <script async defer src="https://maps.googleapis.com/maps/api/js?key=...&callback=initMap" type="text/javascript"></script> *@
+<div class="row">
+    <h3>
+        @Model.WeddingName's Wedding
+    </h3>
+</div>
+<div class="row py-3">
+    <h4>Date: @Model.Date.ToString("MMMM dd, yyyy ")</h4>
+</div>
+<div class="row">
+    <p>Guests:</p>
+</div>
+<div class="row">
+    <ul>
+        @foreach(var assoc in @Model.AllUsers)
+        {
+            <li>@assoc.User.FirstName @assoc.User.LastName</li>
+        }
+    </ul>
+
+</div>
+
+@* <iframe width="600" height="450" frameborder="0" style="border:0"
+src="https://www.google.com/maps/embed/v1/search?q=@Model.Address&key=...&" allowfullscreen></iframe> *@
+
+
+
